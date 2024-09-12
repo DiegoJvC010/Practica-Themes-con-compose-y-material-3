@@ -43,15 +43,19 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            ReplyApp(
-                replyHomeUIState = uiState,
-                closeDetailScreen = {
-                    viewModel.closeDetailScreen()
-                },
-                navigateToDetail = { emailId ->
-                    viewModel.setSelectedEmail(emailId)
+            AppTheme {
+                Surface(tonalElevation = 5.dp) {
+                    ReplyApp(
+                        replyHomeUIState = uiState,
+                        closeDetailScreen = {
+                            viewModel.closeDetailScreen()
+                        },
+                        navigateToDetail = { emailId ->
+                            viewModel.setSelectedEmail(emailId)
+                        }
+                    )
                 }
-            )
+            }
         }
     }
 }
@@ -67,13 +71,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ReplyAppPreview() {
     AppTheme {
-        Surface (tonalElevation = 5.dp){
-            ReplyApp(
-                replyHomeUIState = ReplyHomeUIState(
-                    emails = LocalEmailsDataProvider.allEmails
-                )
+        ReplyApp(
+            replyHomeUIState =  ReplyHomeUIState(
+                emails = LocalEmailsDataProvider.allEmails
             )
-        }
-
+        )
     }
 }
